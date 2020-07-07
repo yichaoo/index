@@ -1,0 +1,938 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MorkDown和MKDoc相关说明文档和示例">
+      
+      
+      
+        <meta name="author" content="Liu Yichao">
+      
+      <link rel="shortcut icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+    
+    
+      
+        <title>CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯 - MorkDown速查手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#centos7-docker0" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href=".." title="MorkDown速查手册" class="md-header-nav__button md-logo" aria-label="MorkDown速查手册">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            MorkDown速查手册
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../index.html" class="md-tabs__link">
+        首页
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../01MKDocs/CMD%20Markdown.html" class="md-tabs__link">
+          示例文档
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" class="md-tabs__link md-tabs__link--active">
+          容器相关
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="MorkDown速查手册" class="md-nav__button md-logo" aria-label="MorkDown速查手册">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    MorkDown速查手册
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../index.html" title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../Markdown%E6%95%99%E7%A8%8B.html" title="Markdown教程" class="md-nav__link">
+      Markdown教程
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html" title="附录：创始人 John Gruber 的 Markdown 基础语法说明" class="md-nav__link">
+      附录：创始人 John Gruber 的 Markdown 基础语法说明
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      示例文档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="示例文档" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        示例文档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/CMD%20Markdown.html" title="欢迎使用 Cmd Markdown 编辑阅读器" class="md-nav__link">
+      欢迎使用 Cmd Markdown 编辑阅读器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/MKDocConfigration.html" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/Material%20for%20MkDocs%20Getting%20started.html" title="Material for MkDocs Getting started" class="md-nav__link">
+      Material for MkDocs Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/MkDocs.html" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/error.html" title="Error" class="md-nav__link">
+      Error
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../01MKDocs/hello.html" title="欢迎来到我的MK文档mkdocs" class="md-nav__link">
+      欢迎来到我的MK文档mkdocs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      容器相关
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="容器相关" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        容器相关
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-nav__link md-nav__link--active">
+      CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    适用场景
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    操作步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="操作步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1docker0" class="md-nav__link">
+    1.先删除默认网桥docker0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2bridge0" class="md-nav__link">
+    2.添加自定义网桥bridge0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3docker" class="md-nav__link">
+    3.修改Docker守护进程配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4ip" class="md-nav__link">
+    4.检查网桥IP网关
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5.测试联调容器网络是否正常
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6.外网不能访问容器内网的情况
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2">
+    
+    <label class="md-nav__link" for="nav-5-2">
+      Linux手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Linux手册" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Linux手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="linux/1.linux-demo.html" title="Linux 基本命令手册" class="md-nav__link">
+      Linux 基本命令手册
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    前言
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    适用场景
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    操作步骤
+  </a>
+  
+    <nav class="md-nav" aria-label="操作步骤">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1docker0" class="md-nav__link">
+    1.先删除默认网桥docker0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2bridge0" class="md-nav__link">
+    2.添加自定义网桥bridge0
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3docker" class="md-nav__link">
+    3.修改Docker守护进程配置
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4ip" class="md-nav__link">
+    4.检查网桥IP网关
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    5.测试联调容器网络是否正常
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    6.外网不能访问容器内网的情况
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    总结
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="centos7-docker0">CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯<a class="headerlink" href="#centos7-docker0" title="Permanent link">&para;</a></h1>
+<p>作者 lyc<br />
+ 2020 年 07月 03日    </p>
+<h3 id="_1">前言<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p>Docker在启动容器镜像实例之后，默认是采用网桥的模式与外界进行通讯，详细参考官网说明<sup id="fnref:docker官方网络配置说明"><a class="footnote-ref" href="#fn:docker官方网络配置说明">1</a></sup> </p>
+<h3 id="_2">适用场景<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>1.Docker容器安装到VMware 虚拟机的CentOS7之后,启动的容器实例无法访问宿主主机IP，更无法访问外网，宿主主机也无法访问容器IP。通过堡垒机访问Docker也有可能出现类似问题。(CentOS7物理主机及云主机暂时没有发现此问题)<br />
+2.业务场景需要采用自定义网桥进行容器网络管理  </p>
+</blockquote>
+<h3 id="_3">操作步骤<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<h4 id="1docker0">1.先删除默认网桥docker0<a class="headerlink" href="#1docker0" title="Permanent link">&para;</a></h4>
+<p>查看系统网桥(Linux网桥相关操作需要用到工具bridge-utils)</p>
+<div class="highlight"><pre><span></span><code>brctl show
+</code></pre></div>
+
+<div class="admonition tip">
+<p class="admonition-title">提示</p>
+<p>如果提示brctl命令不存在，则需要安装此工具:<code>yum install bridge-utils</code>,安装完成之后可以通过<code>brctl show</code>查看到默认网桥docker0</p>
+</div>
+<p>然后通过<code>ip link set dev</code>命令先关闭docker0,再通过<code>brctl delbr</code>命令进行删除即可</p>
+<div class="highlight"><pre><span></span><code>ip link <span class="nb">set</span> dev docker0 down
+brctl delbr docker0
+</code></pre></div>
+
+<h4 id="2bridge0">2.添加自定义网桥bridge0<a class="headerlink" href="#2bridge0" title="Permanent link">&para;</a></h4>
+<p>先停止容器</p>
+<div class="highlight"><pre><span></span><code>service docker stop
+</code></pre></div>
+
+<p>再添加网桥bridge0并设置IP地址段</p>
+<div class="highlight"><pre><span></span><code>brctl addbr bridge0
+ip addr add <span class="m">172</span>.16.100.1/24 dev bridge0
+</code></pre></div>
+
+<p>启动网桥，查看自定义网桥信息</p>
+<div class="highlight"><pre><span></span><code>ip link <span class="nb">set</span> dev bridge0 up
+ifconfig bridge0
+</code></pre></div>
+
+<p><img alt="image-20200703131436886" src="assets/imgs/image-20200703131436886.png" /></p>
+<h4 id="3docker">3.修改Docker守护进程配置<a class="headerlink" href="#3docker" title="Permanent link">&para;</a></h4>
+<div class="admonition tip">
+<p class="admonition-title">提示</p>
+<p>docker自定义配置文件路径为/etc/docker/daemon.json,如果没有此文件,则需要创建它vim /etc/docker/daemon.json</p>
+</div>
+<p>添加配置项</p>
+<div class="highlight"><pre><span></span><code>&quot;bridge&quot;:&quot;bridge0&quot;
+</code></pre></div>
+
+<p>配置结果如下(本机之前配置过加速镜像和私有仓库地址)</p>
+<p><img alt="image-20200703120537438" src="assets/imgs/image-20200703120537438.png" /></p>
+<p>查看最新网桥名称，再没有启动容器之前bridge id 为<code>8000.00000000000</code></p>
+<div class="highlight"><pre><span></span><code>brctl show
+</code></pre></div>
+
+<p><img alt="image-20200703115340309" src="assets/imgs/image-20200703115340309.png" /></p>
+<h4 id="4ip">4.检查网桥IP网关<a class="headerlink" href="#4ip" title="Permanent link">&para;</a></h4>
+<p>重新启动docker服务</p>
+<div class="highlight"><pre><span></span><code>service docker start
+</code></pre></div>
+
+<p>查看docker bridge网络详情</p>
+<div class="highlight"><pre><span></span><code>docker network inspect bridge
+</code></pre></div>
+
+<p>检查网桥配置是否为名称<code>bridge.name:"bridge0"</code>网络段<code>subnet：172.16.100.0/24</code>网关<code>Gateawy:172.16.100.1</code></p>
+<p><img alt="image-20200703121209891" src="assets/imgs/image-20200703121209891.png" /></p>
+<h4 id="5">5.测试联调容器网络是否正常<a class="headerlink" href="#5" title="Permanent link">&para;</a></h4>
+<p>启动一个镜像进行容器网络调试，这里使用netshoot<sup id="fnref:nicolaka/netshoot"><a class="footnote-ref" href="#fn:nicolaka/netshoot">2</a></sup>镜像</p>
+<div class="highlight"><pre><span></span><code>docker run -it --rm --name testnet nicolaka/netshoot
+</code></pre></div>
+
+<p>运行容器之后，可直接进行对容器进行交互式命令操作，首先获取的ip地址信息</p>
+<div class="highlight"><pre><span></span><code>ifconfig
+</code></pre></div>
+
+<p>接下来在容器中进行 <mark>三连ping</mark> ,验证网络是否正常通讯</p>
+<p>一ping 网桥网关 <code>ping 172.16.100.1</code></p>
+<p>二ping 宿主主机IP或网关 <code>ping 192.168.10.20</code>(在VMware中的CentOS与真实机是NAT联网模式，可以直接ping本物理机的ip或网关)</p>
+<p>三ping 外网地址 <code>www.baidu.com</code></p>
+<p>测试结果如下，容器内网和外网全部通讯正常</p>
+<p><img alt="image-20200703120141437" src="assets/imgs/image-20200703120141437.png" /></p>
+<p>退出容器(输入<code>exit</code>),最后在宿主主机CentOS7中测试是否可以与容器实例通讯</p>
+<p>ping 172.16.100.1 网桥网关<br />
+ping172.16.100.2  容器实例IP  </p>
+<p><img alt="image-20200703145056637" src="assets/imgs/image-20200703145056637.png" /></p>
+<p>也可以直接查看bridge0的id，查看刚刚启动的容器实例是否关联网桥</p>
+<div class="highlight"><pre><span></span><code>brctl show
+</code></pre></div>
+
+<div class="admonition warning">
+<p class="admonition-title">注意</p>
+<p>如下图所示bridge id <code>8000.ae723e9584f0</code> , 如果bridge id 仍然是8000.00000，则要么没有启动容器实例，要么上面的步骤有误。</p>
+</div>
+<p>查看容器IP的方法，除了进入容器内部执行<code>ifconfig</code>查看<code>ip</code>以外(注意：有些容器镜像是没有集成网络命令的)，大部分情况下我们通过<code>docker network inspect</code>子命令查看与网桥关联的所有容器实例ip或 <code>docker inspect [容器id/name]</code>查看某个容器实例的ip</p>
+<div class="highlight"><pre><span></span><code>docker network inspect bridge
+</code></pre></div>
+
+<p><img alt="image-20200703122441232" src="assets/imgs/image-20200703122441232.png" /></p>
+<h4 id="6">6.外网不能访问容器内网的情况<a class="headerlink" href="#6" title="Permanent link">&para;</a></h4>
+<p><strong>调整防火墙访问规则或关闭防火墙</strong></p>
+<p>如果宿主主机开启了防火墙,外网可能无法访问容器所暴露的端口，解决方案是开启防火墙相关端口即可,比如容器是一个web服务实例，外部与内部的端口映射关系为 <mark>8080:80</mark> ,则宿主主机应该开启 <mark>8080</mark> 端口访问规则，外网才可以访问容器内部的web服务.</p>
+<h3 id="_4">总结<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>以上核心命令总结如下</p>
+<div class="highlight"><pre><span></span><code>ip link set dev docker0 down
+brctl delbr docker0
+service docker stop
+brctl addbr bridge0
+ip addr add 172.16.100.1/24 dev bridge0
+ip link set dev bridge0 up
+ifconfig bridge0
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>vim /etc/docker/daemon.json
+&quot;bridge&quot;:&quot;bridge0&quot;
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>service docker start
+docker network inspect bridge
+docker run -it --rm --name testnet nicolaka/netshoot
+</code></pre></div>
+
+<div class="highlight"><pre><span></span><code>brctl show
+docker network inspect bridge
+</code></pre></div>
+
+<div class="admonition note">
+<p>本文分享内容适合开发工程师通过VMware来进行Docker容器化集成或测试环境部署，所遇到的问题也是本人反复查资料和不断折腾总结而来。专业的运维工程师应该可以解决<strong>在VMware CentOS7中原有默认网桥docker0不work的情况</strong>，期待有更好的解决方案。以下是参考引用地址：</p>
+</div>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:docker官方网络配置说明">
+<p>docker官方网络配置说明 <a href="https://docs.docker.com/network/">Networking overview</a>, <a href="https://docs.docker.com/network/bridge">Use bridge networks</a>&#160;<a class="footnote-backref" href="#fnref:docker官方网络配置说明" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:nicolaka/netshoot">
+<p>开源Docker and Kubernetes network t络调试诊断工具 <a href="https://github.com/nicolaka/netshoot">nicolaka/netshoot</a>&#160;<a class="footnote-backref" href="#fnref:nicolaka/netshoot" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:vilce博客">
+<p>Docker网桥模式ping不通宿主机 <a href="https://blog.csdn.net/qq_36059826/article/details/106550332">地址</a>&#160;<a class="footnote-backref" href="#fnref:vilce博客" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      最后更新: 2020年7月4日
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../01MKDocs/hello.html" title="欢迎来到我的MK文档mkdocs" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                欢迎来到我的MK文档mkdocs
+              </div>
+            </div>
+          </a>
+        
+        
+          <a href="linux/1.linux-demo.html" title="Linux 基本命令手册" class="md-footer-nav__link md-footer-nav__link--next" rel="next">
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  下一页
+                </span>
+                Linux 基本命令手册
+              </div>
+            </div>
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2020 LYC
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M385.2 167.6c6.4 0 12.6.3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2.1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3.1 10-9.9 19.6-24.4 19.6z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../assets/javascripts/worker/search.a68abb33.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>

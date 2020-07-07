@@ -1,0 +1,960 @@
+
+
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="MorkDown和MKDoc相关说明文档和示例">
+      
+      
+      
+        <meta name="author" content="Liu Yichao">
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-5.4.0">
+    
+    
+      
+        <title>Linux 基本命令手册 - MorkDown速查手册</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.fe0cca5b.min.css">
+      
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.a46bcfb3.min.css">
+      
+      
+        
+        
+        <meta name="theme-color" content="#3f51b5">
+      
+    
+    
+    
+      
+        <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>body,input{font-family:"Roboto",-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono",SFMono-Regular,Consolas,Menlo,monospace}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#linux" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header-nav md-grid" aria-label="Header">
+    <a href="../.." title="MorkDown速查手册" class="md-header-nav__button md-logo" aria-label="MorkDown速查手册">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header-nav__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header-nav__title" data-md-component="header-title">
+      
+        <div class="md-header-nav__ellipsis">
+          <span class="md-header-nav__topic md-ellipsis">
+            MorkDown速查手册
+          </span>
+          <span class="md-header-nav__topic md-ellipsis">
+            
+              Linux 基本命令手册
+            
+          </span>
+        </div>
+      
+    </div>
+    
+      <label class="md-header-nav__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active">
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0116 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 019.5 16 6.5 6.5 0 013 9.5 6.5 6.5 0 019.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" data-md-component="search-reset" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+        
+      
+      
+        
+          
+
+  
+
+<nav class="md-tabs md-tabs--active" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-tabs__inner md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  <li class="md-tabs__item">
+    
+      <a href="../../index.html" class="md-tabs__link">
+        首页
+      </a>
+    
+  </li>
+
+      
+        
+      
+        
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../../01MKDocs/CMD%20Markdown.html" class="md-tabs__link">
+          示例文档
+        </a>
+      
+    </li>
+  
+
+      
+        
+  
+  
+    <li class="md-tabs__item">
+      
+        <a href="../2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" class="md-tabs__link md-tabs__link--active">
+          容器相关
+        </a>
+      
+    </li>
+  
+
+      
+    </ul>
+  </div>
+</nav>
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              <div class="md-sidebar md-sidebar--primary" data-md-component="navigation">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="MorkDown速查手册" class="md-nav__button md-logo" aria-label="MorkDown速查手册">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 003-3 3 3 0 00-3-3 3 3 0 00-3 3 3 3 0 003 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    MorkDown速查手册
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../index.html" title="首页" class="md-nav__link">
+      首页
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../Markdown%E6%95%99%E7%A8%8B.html" title="Markdown教程" class="md-nav__link">
+      Markdown教程
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item">
+    <a href="../../%E9%99%84%E5%BD%95%EF%BC%9A%E5%88%9B%E5%A7%8B%E4%BA%BA%20John%20Gruber%20%E7%9A%84%20Markdown%20%E5%9F%BA%E7%A1%80%E8%AF%AD%E6%B3%95%E8%AF%B4%E6%98%8E.html" title="附录：创始人 John Gruber 的 Markdown 基础语法说明" class="md-nav__link">
+      附录：创始人 John Gruber 的 Markdown 基础语法说明
+    </a>
+  </li>
+
+    
+      
+      
+      
+
+
+  <li class="md-nav__item md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4">
+    
+    <label class="md-nav__link" for="nav-4">
+      示例文档
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="示例文档" data-md-level="1">
+      <label class="md-nav__title" for="nav-4">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        示例文档
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/CMD%20Markdown.html" title="欢迎使用 Cmd Markdown 编辑阅读器" class="md-nav__link">
+      欢迎使用 Cmd Markdown 编辑阅读器
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/MKDocConfigration.html" title="Configuration" class="md-nav__link">
+      Configuration
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/Material%20for%20MkDocs%20Getting%20started.html" title="Material for MkDocs Getting started" class="md-nav__link">
+      Material for MkDocs Getting started
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/MkDocs.html" title="MkDocs" class="md-nav__link">
+      MkDocs
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/error.html" title="Error" class="md-nav__link">
+      Error
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../../01MKDocs/hello.html" title="欢迎来到我的MK文档mkdocs" class="md-nav__link">
+      欢迎来到我的MK文档mkdocs
+    </a>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+      
+      
+      
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+    
+    <label class="md-nav__link" for="nav-5">
+      容器相关
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="容器相关" data-md-level="1">
+      <label class="md-nav__title" for="nav-5">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        容器相关
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+
+  <li class="md-nav__item">
+    <a href="../2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-nav__link">
+      CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+    </a>
+  </li>
+
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    
+      <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5-2" type="checkbox" id="nav-5-2" checked>
+    
+    <label class="md-nav__link" for="nav-5-2">
+      Linux手册
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M8.59 16.58L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.42z"/></svg>
+      </span>
+    </label>
+    <nav class="md-nav" aria-label="Linux手册" data-md-level="2">
+      <label class="md-nav__title" for="nav-5-2">
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+        </span>
+        Linux手册
+      </label>
+      <ul class="md-nav__list" data-md-scrollfix>
+        
+        
+          
+          
+          
+
+  
+
+
+  <li class="md-nav__item md-nav__item--active">
+    
+    <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+    
+      
+    
+    
+      <label class="md-nav__link md-nav__link--active" for="__toc">
+        Linux 基本命令手册
+        <span class="md-nav__icon md-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 9h14V7H3v2m0 4h14v-2H3v2m0 4h14v-2H3v2m16 0h2v-2h-2v2m0-10v2h2V7h-2m0 6h2v-2h-2v2z"/></svg>
+        </span>
+      </label>
+    
+    <a href="1.linux-demo.html" title="Linux 基本命令手册" class="md-nav__link md-nav__link--active">
+      Linux 基本命令手册
+    </a>
+    
+      
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系统工作命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mv" class="md-nav__link">
+    mv命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp命令 – 复制文件或目录
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+    
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+        
+      </ul>
+    </nav>
+  </li>
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="toc">
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    系统工作命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#mv" class="md-nav__link">
+    mv命令
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#cp" class="md-nav__link">
+    cp命令 – 复制文件或目录
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                  
+                
+                
+                <h1 id="linux">Linux 基本命令手册<a class="headerlink" href="#linux" title="Permanent link">&para;</a></h1>
+<h3 id="_1">系统工作命令<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h3>
+<p><div class="highlight"><pre><span></span><code>echo、date、reboot、poweroff、wget、ps、  
+top、pidof、kill、killall、bg、fg
+</code></pre></div>
+1. <mark>echo</mark> 命令用于在终端显示字符串或变量，格式为：“echo [字符串 | 变量]”</p>
+<blockquote>
+<p>将echo命令的字符串输出到终端：
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost Desktop]$ echo welcomelinux
+welcomelinux
+</code></pre></div>
+用echo命令查看SHELL变量的值（前面有$符号）：</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost Desktop]$ echo $SHELL
+/bin/========bash========
+</code></pre></div>
+
+<blockquote>
+<p>查看本机主机名：
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost Desktop]$ echo $HOSTNAME
+localhost.localdomain
+</code></pre></div></p>
+</blockquote>
+<ol>
+<li><mark>date</mark> 命令用于显示/设置系统的时间或日期，格式为："date [选项] [+指定的格式]"。</li>
+</ol>
+<p>强大的date命令能够按照指定格式显示系统的时间或日期，只需键入"+"号开头的字符串指定其格式，详细格式如下：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>%t</td>
+<td>跳格[TAB键]</td>
+</tr>
+<tr>
+<td>%H</td>
+<td>小时(00-23)</td>
+</tr>
+<tr>
+<td>%I</td>
+<td>小时(01-12)</td>
+</tr>
+<tr>
+<td>%M</td>
+<td>分钟(00-59)</td>
+</tr>
+<tr>
+<td>%S</td>
+<td>秒（00-60）</td>
+</tr>
+<tr>
+<td>%X</td>
+<td>相当于%H:%M:%S</td>
+</tr>
+<tr>
+<td>%Z</td>
+<td>显示时区</td>
+</tr>
+<tr>
+<td>%p</td>
+<td>显示本地AM或PM</td>
+</tr>
+<tr>
+<td>%A</td>
+<td>星期几 (Sunday-Saturday)</td>
+</tr>
+<tr>
+<td>%a</td>
+<td>星期几 (Sun-Sat)</td>
+</tr>
+<tr>
+<td>%B</td>
+<td>完整月份 (January-December)</td>
+</tr>
+<tr>
+<td>%b</td>
+<td>缩写月份 (Jan-Dec)</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>日(01-31)</td>
+</tr>
+<tr>
+<td>%j</td>
+<td>一年中的第几天(001-366)</td>
+</tr>
+<tr>
+<td>%m</td>
+<td>月份(01-12)</td>
+</tr>
+<tr>
+<td>%Y</td>
+<td>完整的年份</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>查看当前的系统时间：</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost Desktop]$ date
+Thu Jul 14 15:53:49 CST 2016
+</code></pre></div>
+
+<blockquote>
+<p>按照"年-月-日 小时:分钟:秒"的格式：</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost Desktop]$ date &quot;+%Y-%m-%d %H:%M:%S&quot;
+2016-07-14 15:56:19
+</code></pre></div>
+
+<blockquote>
+<p>设置系统时间为2015年9月1日8点半：</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code>[liuyichao@localhost ~]# date -s &quot;20150901 8:30:00&quot;
+Tue Sep 1 08:30:00 CST 2015
+</code></pre></div>
+
+<ol>
+<li>
+<p><mark>reboot</mark> 命令用于重启系统(仅root用户可以使用)，格式为："reboot"。</p>
+</li>
+<li>
+<p><mark>poweroff</mark> 命令用于关闭系统(仅root用户可以使用)，格式为："poweroff"。</p>
+</li>
+<li>
+<p><mark>wget</mark> 命令用于使用命令行下载网络文件，格式为：“wget [参数] 下载地址”。</p>
+</li>
+<li><mark>curl</mark> 命令用于使用命令行下载网络文件，格式为：“wget [参数] 下载地址”。</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-b</td>
+<td>后台下载模式。</td>
+</tr>
+<tr>
+<td>-O</td>
+<td>下载到指定目录。</td>
+</tr>
+<tr>
+<td>-t</td>
+<td>最大尝试次数。</td>
+</tr>
+<tr>
+<td>-c</td>
+<td>断点续传</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>下载页面内所有资源,包括图片、视频等。</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归下载</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li><mark>ps</mark>(report a snapshot of the current processes)命令用于查看系统中的进程状态，格式为：“ps [参数]</li>
+<li><mark>top</mark> 命令用于监视进程的活动与系统负载，格式为：“top”。</li>
+<li><mark>pidof</mark> 命令用于查询某个特定程序的进程PID值，格式为：“pidof [参数] [程序名称]”</li>
+<li><mark>kill</mark> 命令用于终止某个特定PID号码的进程，格式为：“kill [参数] [进程PID号]”。</li>
+<li><mark>killall</mark> 命令用于终止某个特定名称的所有进程，格式为：“killall [参数] [进程名称]”</li>
+<li><mark>"Ctrl+c"</mark> 进程立即停止,<mark>"Ctrl+z"</mark>，它是将命令的进程暂停（也叫挂载到后台或扔到后台）</li>
+<li><mark>jobs、bg和fg命令</mark>,==jobs==命令可以查看到所有在后台运行着的进程,==bg==命令让后台的程序继续执行,==fg==命令将后台的进程再调回前台</li>
+</ol>
+<h3 id="mv">mv命令<a class="headerlink" href="#mv" title="Permanent link">&para;</a></h3>
+<p>mv命令是“move”单词的缩写，其功能大致和英文含义一样，可以移动文件或对其改名。</p>
+<p>这是一个使用频率超高的文件管理命令，我们需要特别留意它与复制的区别：mv与cp的结果不同。mv命令好像文件“搬家”，文件名称发生改变，但个数并未增加。而cp命令是对文件进行复制操作，文件个数是有增加的。</p>
+<p>语法格式：mv [参数]</p>
+<p>常用参数：</p>
+<table>
+<thead>
+<tr>
+<th>-i</th>
+<th>若存在同名文件，则向用户询问是否覆盖</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-f</td>
+<td>覆盖已有文件时，不进行任何提示</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>当文件存在时，覆盖前为其创建一个备份</td>
+</tr>
+<tr>
+<td>-u</td>
+<td>当源文件比目标文件新，或者目标文件不存在时，才执行移动此操作</td>
+</tr>
+</tbody>
+</table>
+<p>参考实例</p>
+<p>将文件file_1重命名为file_2：</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>root@linuxcool ~<span class="o">]</span><span class="c1"># mv file_1 file_2</span>
+</code></pre></div>
+
+<p>将文件file移动到目录dir中 ：</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>root@linuxcool ~<span class="o">]</span><span class="c1"># mv file /dir</span>
+</code></pre></div>
+
+<p>将目录dir1移动目录dir2中（前提是目录dir2已存在，若不存在则改名)：</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>root@linuxcool ~<span class="o">]</span><span class="c1"># mv /dir1 /dir2</span>
+</code></pre></div>
+
+<p>将目录dir1下的文件移动到当前目录下：</p>
+<div class="highlight"><pre><span></span><code><span class="o">[</span>root@linuxcool ~<span class="o">]</span><span class="c1"># mv /dir1/* .</span>
+</code></pre></div>
+
+<h3 id="cp">cp命令 – 复制文件或目录<a class="headerlink" href="#cp" title="Permanent link">&para;</a></h3>
+<p>cp命令可以理解为英文单词copy的缩写，其功能为复制文件或目录。</p>
+<p>cp命令可以将多个文件复制到一个具体的文件名或一个已经存在的目录下，也可以同时复制多个文件到一个指定的目录中。</p>
+<p><strong>语法格式：</strong>cp [参数] [文件]</p>
+<p><strong>常用参数：</strong></p>
+<table>
+<thead>
+<tr>
+<th>-f</th>
+<th>若目标文件已存在，则会直接覆盖原文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-i</td>
+<td>若目标文件已存在，则会询问是否覆盖</td>
+</tr>
+<tr>
+<td>-p</td>
+<td>保留源文件或目录的所有属性</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>递归复制文件和目录</td>
+</tr>
+<tr>
+<td>-d</td>
+<td>当复制符号连接时，把目标文件或目录也建立为符号连接，并指向与源文件或目录连接的原始文件或目录</td>
+</tr>
+<tr>
+<td>-l</td>
+<td>对源文件建立硬连接，而非复制文件</td>
+</tr>
+<tr>
+<td>-s</td>
+<td>对源文件建立符号连接，而非复制文件</td>
+</tr>
+<tr>
+<td>-b</td>
+<td>覆盖已存在的文件目标前将目标文件备份</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>详细显示cp命令执行的操作过程</td>
+</tr>
+<tr>
+<td>-a</td>
+<td>等价于“dpr”选项</td>
+</tr>
+</tbody>
+</table>
+<p><strong>参考实例</strong></p>
+<p>复制目录：</p>
+<div class="highlight"><pre><span></span><code>[root@linuxcool ~]# cp -R dir1 dir2/
+</code></pre></div>
+
+<p>将文件test1改名为test2：</p>
+<div class="highlight"><pre><span></span><code>[root@linuxcool ~]# cp -f test1 test2
+</code></pre></div>
+
+<p>复制多个文件：</p>
+<div class="highlight"><pre><span></span><code>[root@linuxcool ~]# cp -r file1 file2 file3 dir
+</code></pre></div>
+
+<p>交互式地将目录 /usr/linuxcool 中的所有.c文件复制到目录 dir 中：</p>
+<div class="highlight"><pre><span></span><code>[root@linuxcool ~]# cp -r /usr/linuxcool/*.c dir
+</code></pre></div>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      最后更新: 2020年7月4日
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <div class="md-footer-nav">
+      <nav class="md-footer-nav__inner md-grid" aria-label="Footer">
+        
+          <a href="../2.CentOS7%20%E5%AE%B9%E5%99%A8%E7%8E%AF%E5%A2%83%E5%88%A0%E9%99%A4%E9%BB%98%E8%AE%A4%E7%BD%91%E6%A1%A5Docker0%EF%BC%8C%E9%87%87%E7%94%A8%E8%87%AA%E5%AE%9A%E4%B9%89%E7%BD%91%E6%A1%A5%E8%BF%9B%E8%A1%8C%E9%80%9A%E8%AE%AF.html" title="CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯" class="md-footer-nav__link md-footer-nav__link--prev" rel="prev">
+            <div class="md-footer-nav__button md-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+            </div>
+            <div class="md-footer-nav__title">
+              <div class="md-ellipsis">
+                <span class="md-footer-nav__direction">
+                  上一页
+                </span>
+                CentOS7 容器环境删除默认网桥Docker0，采用自定义网桥进行通讯
+              </div>
+            </div>
+          </a>
+        
+        
+      </nav>
+    </div>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            Copyright &copy; 2016 - 2020 LYC
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg>
+      </a>
+    
+      
+      
+        
+        
+      
+      <a href="https://github.com/yichaoo" target="_blank" rel="noopener" title="github.com" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path d="M385.2 167.6c6.4 0 12.6.3 18.8 1.1C387.4 90.3 303.3 32 207.7 32 100.5 32 13 104.8 13 197.4c0 53.4 29.3 97.5 77.9 131.6l-19.3 58.6 68-34.1c24.4 4.8 43.8 9.7 68.2 9.7 6.2 0 12.1-.3 18.3-.8-4-12.9-6.2-26.6-6.2-40.8-.1-84.9 72.9-154 165.3-154zm-104.5-52.9c14.5 0 24.2 9.7 24.2 24.4 0 14.5-9.7 24.2-24.2 24.2-14.8 0-29.3-9.7-29.3-24.2.1-14.7 14.6-24.4 29.3-24.4zm-136.4 48.6c-14.5 0-29.3-9.7-29.3-24.2 0-14.8 14.8-24.4 29.3-24.4 14.8 0 24.4 9.7 24.4 24.4 0 14.6-9.6 24.2-24.4 24.2zM563 319.4c0-77.9-77.9-141.3-165.4-141.3-92.7 0-165.4 63.4-165.4 141.3S305 460.7 397.6 460.7c19.3 0 38.9-5.1 58.6-9.9l53.4 29.3-14.8-48.6C534 402.1 563 363.2 563 319.4zm-219.1-24.5c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.8 0 24.4 9.7 24.4 19.3 0 10-9.7 19.6-24.4 19.6zm107.1 0c-9.7 0-19.3-9.7-19.3-19.6 0-9.7 9.7-19.3 19.3-19.3 14.5 0 24.4 9.7 24.4 19.3.1 10-9.9 19.6-24.4 19.6z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    
+      <script src="../../assets/javascripts/vendor.d710d30a.min.js"></script>
+      <script src="../../assets/javascripts/bundle.b39636ac.min.js"></script><script id="__lang" type="application/json">{"clipboard.copy": "\u590d\u5236", "clipboard.copied": "\u5df2\u590d\u5236", "search.config.lang": "ja", "search.config.pipeline": "trimmer, stemmer", "search.config.separator": "[\\uff0c\\u3002]+", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c"}</script>
+      
+      <script>
+        app = initialize({
+          base: "../..",
+          features: ["tabs"],
+          search: Object.assign({
+            worker: "../../assets/javascripts/worker/search.a68abb33.min.js"
+          }, typeof search !== "undefined" && search)
+        })
+      </script>
+      
+    
+  </body>
+</html>
