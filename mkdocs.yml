@@ -1,0 +1,77 @@
+site_name: 技术文档及填坑手册 
+site_description: 技术文档和填坑手册
+site_author: Liu Yichao
+
+site_url: https://yichaoo.github.io/
+
+# Repository
+repo_name: yichaoo/index
+repo_url: https://github.com/yichaoo/index
+
+#是否使用目录路径访问文件
+use_directory_urls: false 
+
+# Copyright
+copyright: Copyright &copy; 2016 - 2020 LYC
+
+# Configuration
+theme:
+  name: material
+  language: zh
+  palette:  # 配色
+    primary: Deep Purple 
+    accent: Deep Purple
+  # font:
+  #   text: Roboto
+  #   code: Roboto Mono
+  features:
+    # - instant
+    - tabs #启用tab
+  include_sidebar: false
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - attr_list
+  - codehilite:
+      guess_lang: false
+  - def_list
+  - footnotes
+  - meta
+  - toc:
+      permalink: true
+  - pymdownx.arithmatex
+  - pymdownx.caret
+  # - pymdownx.critic
+  - pymdownx.details
+  - pymdownx.inlinehilite
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.superfences
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tabbed
+  - pymdownx.tilde
+
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/yichaoo
+    - icon: fontawesome/brands/qq
+      link: https://github.com/yichaoo
+    - icon: fontawesome/brands/weixin
+      link: https://github.com/yichaoo
+  # disqus: your-shortname  #评论
+plugins:  
+  - search: # necessary for search to work
+      # lang:
+        # - zh
+        # - en
+        # - jp
+  - awesome-pages      
+  - git-revision-date-localized: # 发布日期
+      type: date
+      fallback_to_build_date: true
