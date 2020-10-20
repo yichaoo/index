@@ -117,5 +117,4 @@ When you first access a new Jenkins instance, you are asked to unlock it using a
 
 [参考引用](https://www.jianshu.com/p/5f671aca2b5a)
 
-![img](https://upload-images.jianshu.io/upload_images/6464255-cc56d3af1fdd96df.png)
-
+![img](pics/6464255-cc56d3af1fdd96df.png)

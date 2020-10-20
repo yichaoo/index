@@ -108,16 +108,19 @@ webapp文件夹：用来存放web配置文件以及jsp页面等
 
 1.乱码的地方
 
-![img](https://img2018.cnblogs.com/blog/1695401/201908/1695401-20190805110510316-1777795592.png)
+
+
+![img](pics/1695401-20190805110510316-1777795592.png)
+
 ![image-20200803195828196](pics/image-20200803195828196.png)
+
+
 
  
 
 2.解决方法
 
 打开Tomcat安装路径的tomcat/conf/目录下的修改logging.properties
-
-![img](https://img2018.cnblogs.com/blog/1695401/201908/1695401-20190805110810155-427425356.png)
 
 **Output乱码解决**
 

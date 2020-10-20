@@ -1,4 +1,4 @@
-# Getting started
+# Material for MkDocs Getting started
 > https://squidfunk.github.io/mkdocs-material
 ## Installation
 
@@ -6,7 +6,7 @@ While there are several ways of installing Material fo  r MkDocs, the recommende
 methods are either by using `pip` – the Python package manager – or by pulling
 the [official Docker image][1].
 
-  [1]: https://hub.docker.com/r/squidfunk/mkdocs-material/
+[1]: https://hub.docker.com/r/squidfunk/mkdocs-material/
 
 ### with pip <small>recommended</small>
 
@@ -33,11 +33,11 @@ those packages separately.
     When you're running the pre-installed version of Python on macOS, `pip`
     tries to install packages in a folder for which your user might not have
     the adequate permissions. There are two possible solutions for this:
-
+    
     1. **Installing in user space** (recommended): Provide the `--user` flag
       to the install command and `pip` will install the package in a user-site
       location. This is the recommended way.
-
+    
     2. **Switching to a homebrewed Python**: Upgrade your Python installation
       to a self-contained solution by installing Python with Homebrew. This
       should eliminate a lot of problems you could be having with `pip`.
@@ -49,11 +49,11 @@ those packages separately.
     Material for MkDocs through `pip`, so both packages end up in different
     locations. MkDocs only checks its install location for themes.
 
-  [2]: https://www.mkdocs.org
-  [3]: https://python-markdown.github.io/
-  [4]: https://pygments.org/
-  [5]: https://facelessuser.github.io/pymdown-extensions/
-  [6]: https://docs.python-guide.org/dev/virtualenvs/
+[2]: https://www.mkdocs.org
+[3]: https://python-markdown.github.io/
+[4]: https://pygments.org/
+[5]: https://facelessuser.github.io/pymdown-extensions/
+[6]: https://docs.python-guide.org/dev/virtualenvs/
 
 ### with docker <small>recommended</small>
 
@@ -78,10 +78,11 @@ command. Start the development server in your project root – the folder where
 === "Windows"
 
     ```
-    docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+    #docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+    docker run -d --name demo-mkdocs --restart always  -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
     ```
 
-  [7]: https://hub.docker.com/r/squidfunk/mkdocs-material/
+[7]: https://hub.docker.com/r/squidfunk/mkdocs-material/
 
 ### with git
 
@@ -95,7 +96,7 @@ git clone https://github.com/squidfunk/mkdocs-material.git
 
 The theme will reside in the folder `mkdocs-material/material`.
 
-  [8]: https://github.com/squidfunk/mkdocs-material
+[8]: https://github.com/squidfunk/mkdocs-material
 
 ## Configuration
 
@@ -131,21 +132,21 @@ can be used as a starting point:
 ??? summary "Example configuration"
 
     This is an excerpt from the [`mkdocs.yml`][9] used to render these pages:
-
+    
     ``` yaml
     # Project information
     site_name: Material for MkDocs
     site_description: A Material Design theme for MkDocs
     site_author: Martin Donath
     site_url: https://squidfunk.github.io/mkdocs-material/
-
+    
     # Repository
     repo_name: squidfunk/mkdocs-material
     repo_url: https://github.com/squidfunk/mkdocs-material
-
+    
     # Copyright
     copyright: Copyright &copy; 2016 - 2020 Martin Donath
-
+    
     # Configuration
     theme:
       name: material
@@ -156,7 +157,7 @@ can be used as a starting point:
       font:
         text: Roboto
         code: Roboto Mono
-
+    
     # Extras
     extra:
       social:
@@ -166,12 +167,12 @@ can be used as a starting point:
           link: https://twitter.com/squidfunk
         - icon: fontawesome/brands/linkedin
           link: https://linkedin.com/in/squidfunk
-
+    
     # Google Analytics
     google_analytics:
       - UA-XXXXXXXX-X
       - auto
-
+    
     # Extensions
     markdown_extensions:
       - admonition
@@ -394,10 +395,10 @@ from the template.
     Material for MkDocs defines all colors as CSS variables. If you want to
     customize the colors beyond the palette (e.g. to use your brand's colors),
     you can add an [additional stylesheet][11] and override the defaults:
-
+    
     ``` css
     :root {
-
+    
       /* Default color shades */
       --md-default-fg-color:               ...;
       --md-default-fg-color--light:        ...;
@@ -407,31 +408,31 @@ from the template.
       --md-default-bg-color--light:        ...;
       --md-default-bg-color--lighter:      ...;
       --md-default-bg-color--lightest:     ...;
-
+    
       /* Primary color shades */
       --md-primary-fg-color:               ...;
       --md-primary-fg-color--light:        ...;
       --md-primary-fg-color--dark:         ...;
       --md-primary-bg-color:               ...;
       --md-primary-bg-color--light:        ...;
-
+    
       /* Accent color shades */
       --md-accent-fg-color:                ...;
       --md-accent-fg-color--transparent:   ...;
       --md-accent-bg-color:                ...;
       --md-accent-bg-color--light:         ...;
     }
-
+    
     :root > * {
-
+    
       /* Code block color shades */
       --md-code-bg-color:                  ...;
       --md-code-fg-color:                  ...;
     }
     ```
 
-  [10]: http://www.materialui.co/colors
-  [11]: customization.md#additional-stylesheets
+[10]: http://www.materialui.co/colors
+[11]: customization.md#additional-stylesheets
 
 #### Primary color
 
@@ -558,9 +559,9 @@ theme:
   font: false
 ```
 
-  [12]: https://fonts.google.com/specimen/Roboto
-  [13]: https://fonts.google.com
-  [14]: https://fonts.google.com/specimen/Ubuntu
+[12]: https://fonts.google.com/specimen/Roboto
+[13]: https://fonts.google.com
+[14]: https://fonts.google.com/specimen/Ubuntu
 
 ### Icons
 
@@ -589,11 +590,11 @@ made. Icon sets which are bundled with Material for MkDocs:
 __You can use all those icons [directly from :fontawesome-brands-markdown:
 Markdown][19]!__
 
-  [15]: #adding-social-links
-  [16]: https://materialdesignicons.com/
-  [17]: https://fontawesome.com/icons?d=gallery&m=free
-  [18]: https://octicons.github.com/
-  [19]: extensions/pymdown.md#icons
+[15]: #adding-social-links
+[16]: https://materialdesignicons.com/
+[17]: https://fontawesome.com/icons?d=gallery&m=free
+[18]: https://octicons.github.com/
+[19]: extensions/pymdown.md#icons
 
 ### Logo
 
@@ -649,7 +650,7 @@ Note that the repository icon can be explicitly set through `theme.icon.repo`.
     guidance regarding the `edit_uri` attribute, which defines whether the edit
     button is shown or not.
 
-  [20]: https://www.mkdocs.org/user-guide/configuration/#edit_uri
+[20]: https://www.mkdocs.org/user-guide/configuration/#edit_uri
 
 ### Adding social links
 
@@ -673,7 +674,7 @@ By default, the link `title` will be set to the domain name, e.g. _github.com_.
 If you want to set a discernable name, e.g., to improve your Lighthouse score,
 you can set the `name` attribute on each social link.
 
-  [21]: #icons
+[21]: #icons
 
 ### Adding a Web App Manifest
 
@@ -686,7 +687,7 @@ extra:
   manifest: manifest.webmanifest
 ```
 
-  [22]: https://developers.google.com/web/fundamentals/web-app-manifest/
+[22]: https://developers.google.com/web/fundamentals/web-app-manifest/
 
 ## Integrations
 
@@ -733,8 +734,8 @@ necessary JavaScript is automatically included.
 
 Disqus can also be enabled or disabled for specific pages using [Metadata][24].
 
-  [23]: https://disqus.com
-  [24]: extensions/metadata.md#disqus
+[23]: https://disqus.com
+[24]: extensions/metadata.md#disqus
 
 ## Extensions
 

@@ -136,7 +136,7 @@ mvn clean package -Dmaven.test.skip=true
 
 命令执行完毕后，在target目录下生成了jar包、config、lib三部分，如下图：
 
-![img](https://images2018.cnblogs.com/blog/818973/201804/818973-20180418115150124-1436025812.png)
+![img](pics/818973-20180418115150124-1436025812.png)
 
 
 
@@ -144,7 +144,7 @@ mvn clean package -Dmaven.test.skip=true
 
  第三步：使用xftp将jar包上传到服务器/usr/local/springboot-helloworld/deploy目录下
 
-![img](https://images2018.cnblogs.com/blog/818973/201804/818973-20180418115436856-2138612713.png)
+![img](pics/818973-20180418115436856-2138612713.png)
 
  
 
@@ -160,7 +160,7 @@ cd /usr/local/springboot-helloworld/deploy/
 
 springboot默认启动端口为8080，为了测试分开打包后可以修改配置文件，在application.properties文件中修改启动端口为3003
 
-![image-20200909183747347](../pics/image-20200909183747347.png)
+![image-20200909183747347](pics/image-20200909183747347.png)
 
  
 
@@ -174,7 +174,7 @@ java -jar springboot-helloworld-0.0.1-SNAPSHOT.jar
 
  在控制台可以看到启动端口变成了3003，如下图Tomcat started on port(s):3003：
 
-![image-20200909183650494](../pics/image-20200909183650494.png)
+![image-20200909183650494](pics/image-20200909183650494.png)
 
 第五步：创建数据库对应的应用账号
 
@@ -228,13 +228,13 @@ mysql> GRANT ALL ON *.* TO root@'%' IDENTIFIED BY '123456'
 mysql> flush privileges;
 ```
 
-![image-20200909183424636](../pics/image-20200909183424636.png)
+![image-20200909183424636](pics/image-20200909183424636.png)
 
 修改源代码User实体类，添加tel字段，重新构建发布包，并只上传jar包到服务器，停止之前的进程，再次运行之后发现，数据字段已更新;
 
-![image-20200909184134348](../pics/image-20200909184134348.png)
+![image-20200909184134348](pics/image-20200909184134348.png)
 
-![image-20200909183452990](../pics/image-20200909183452990.png)
+![image-20200909183452990](pics/image-20200909183452990.png)
 
 
 
@@ -247,11 +247,9 @@ application.properties和application.yml文件可以放在一下四个位置：
 - 内置，在config包内
 - 内置，在Classpath根目录
 
-同样，这个列表按照优先级排序，也就是说，src/main/resources/config下application.properties覆盖src/main/resources下application.properties中相同的属性，如图：
+同样，这个列表按照优先级排序，也就是说，src/main/resources/config下application.properties覆盖src/main/resources下application.properties中相同的属性，如图： 
 
- 
-
-![img](pics/131f9f0177f.jpeg)
+![image-20201020165648067](pics/image-20201020165648067.png)
 
  
 

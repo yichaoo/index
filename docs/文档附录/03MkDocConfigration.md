@@ -1,4 +1,4 @@
-# Configuration
+# MkDoc Configuration
 
 Guide to all available configuration settings.
 

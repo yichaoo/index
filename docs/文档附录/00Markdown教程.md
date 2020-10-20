@@ -238,7 +238,7 @@
   <img src="http://img3.imgtn.bdimg.com/it/u=1750208429,1514486128&fm=26&gp=0.jpg" width="50%">
   ```
 
-<img src="常用标记/image-20200702174149289.png" alt="image-20200702174149289" style="zoom:25%;" />
+
 
 ```markdown
 3、连接引用变量

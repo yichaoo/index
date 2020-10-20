@@ -60,15 +60,20 @@ command. Start the development server in your project root – the folder where
 
 === "Unix"
 
-    ```
-    docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
-    ```
+```sh
+
+docker run --rm -it -p 8000:8000 -v ${PWD}:/docs squidfunk/mkdocs-material
+
+```
 
 === "Windows"
 
-    ```
-    docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
-    ```
+```sh
+
+docker run --rm -it -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+docker run --name demo-mkdocs --restart always  -p 8000:8000 -v "%cd%":/docs squidfunk/mkdocs-material
+
+```
 
 ### Organization and User Pages
 
