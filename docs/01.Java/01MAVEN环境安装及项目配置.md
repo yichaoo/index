@@ -53,7 +53,17 @@ windows系统下载二进制压缩包：[Maven最新版下地地址](http://mave
 
 ![image-20200723143838689](pics/image-20200723143838689.png)
 
+Linux下通过YUM安装Maven 3.5
 
+```sh
+yum install -y yum-utils
+
+yum-config-manager --add-repo http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo
+
+yum-config-manager --enable epel-apache-maven
+
+yum install -y apache-maven
+```
 
 
 #### Maven查看配置变量命令：mvn help:system

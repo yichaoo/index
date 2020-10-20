@@ -113,3 +113,9 @@ When you first access a new Jenkins instance, you are asked to unlock it using a
 
 4. On the **Unlock Jenkins** page, paste this password into the **Administrator password** field and click **Continue**.
 
+### 思维导图
+
+[参考引用](https://www.jianshu.com/p/5f671aca2b5a)
+
+![img](https://upload-images.jianshu.io/upload_images/6464255-cc56d3af1fdd96df.png)
+

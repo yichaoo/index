@@ -16,54 +16,52 @@
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>com.lnjecit</groupId>
-    <artifactId>springboot-helloworld</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>jar</packaging>
-
-    <name>springboot-helloworld</name>
-    <description>Demo project for Spring Boot</description>
-
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.8.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
+    <groupId>com.jltechcn</groupId>
+    <artifactId>jhdxccip</artifactId>
+    <packaging>pom</packaging>
+    <version>1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
+        <jdk.version>1.8</jdk.version>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web</artifactId>
+                <version>1.5.10.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    <modules>
+        <module>web</module>
+    </modules>
+    <!-- 构建发布包，将tar,lib,resource,properties配置分离构建 -->
     <build>
         <plugins>
-            <!--<plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>-->
-
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <compilerVersion>${jdk.version}</compilerVersion>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <!-- 构建jar包-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
                     <excludes>
                         <exclude>*.properties</exclude>
@@ -72,7 +70,7 @@
                     <archive>
                         <manifest>
                             <!-- 为依赖包添加路径, 这些路径会写在MANIFEST文件的Class-Path下 -->
-                            <mainClass>com.lnjecit.springboothelloworld.SpringbootHelloworldApplication</mainClass>
+                            <mainClass>com.jltechcn.core.SpringApplications</mainClass>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
                             <!-- 打包时 MANIFEST.MF文件不记录的时间戳版本 -->
@@ -80,35 +78,35 @@
                         </manifest>
                         <manifestEntries>
                             <!-- 在Class-Path下添加配置文件的路径 -->
-                            <Class-Path>config/</Class-Path>
+                            <Class-Path>resources/</Class-Path>
                         </manifestEntries>
                     </archive>
                 </configuration>
             </plugin>
+            <!-- 构建resources文件 -->
             <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version>
                 <executions>
                     <execution>
-                        <id>copy-xmls</id>
+                        <id>copy-properties</id>
                         <phase>process-sources</phase>
                         <goals>
                             <goal>copy-resources</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${basedir}/target/config</outputDirectory>
+                            <outputDirectory>${basedir}/target/resources</outputDirectory>
                             <resources>
                                 <resource>
                                     <directory>${basedir}/src/main/resources</directory>
-                                    <includes>
-                                        <include>*.properties</include>
-                                        <include>*.yml</include>
-                                    </includes>
                                 </resource>
                             </resources>
                         </configuration>
                     </execution>
                 </executions>
             </plugin>
+            <!-- 构建依赖包文件 -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -127,8 +125,6 @@
             </plugin>
         </plugins>
     </build>
-
-
 </project>
 ```
 
@@ -317,4 +313,78 @@ netstat -nltp
 ![image-20200919121344439](pics/image-20200919121344439.png)
 
 
+
+#### 一键启动脚本
+
+新建run_jar.sh文件,内容如下 
+
+```sh
+#!/bin/bash
+#--------------------------------------------
+# Springboot项目jar包启动脚本
+# author：yichaoo
+# date:2020/9/18
+# description:
+# 脚本核心命令
+# 后台启动进程:nohup java -jar jhdxweb-1.0-SNAPSHOT.jar > /logs/run.log 2>&1 &
+#-------------------------------------------
+##### 定义全局变量和函数 开始 #####
+
+#定义全局变量jar包路径和项目名称(不带版本号)
+#根据实际项目名称和路径进行更改
+PROJECT_NAME=jhdxweb
+JAR_HOME=/www/java_app/jhdx-web
+RUN_LOG=logs/run.log
+#定义函数变量
+#获取当前项目jar包进程id
+funGetJarPID(){  
+   pid=`jps -l | grep ${PROJECT_NAME} | awk -F" " '{ print $1 }'`    
+}
+
+##### 全局变量配置区 结束  #####
+
+echo "================begin====================="
+echo "starting....."
+funGetJarPID
+echo "[INFO] 找到项目${PROJECT_NAME}的jar包进程${pid}"
+
+while [ ${pid} ] 
+do
+    echo "[INFO] 正在结束项目${PROJECT_NAME}的jar包进程ID:${pid}....."
+    if [ ${pid} ] 
+    then
+        kill -2 ${pid}
+    fi
+    funGetJarPID
+done
+echo "[INFO] 进程已结束"
+
+echo "[INFO] 开始重新运行${JAR_HOME}目录下${PROJECT_NAME}*.jar包"
+nohup java -jar ${JAR_HOME}/${PROJECT_NAME}*.jar > ${JAR_HOME}/${RUN_LOG} 2>&1 &
+#如果命令执行成功，返回结果0
+if [ $? == 0 ]
+then
+    until [ ${pid} ] 
+    do
+        funGetJarPID
+        echo "[INFO] jar包进程创建中...."
+    done    
+    echo "[INFO] 进程已创建PID：${pid}"  
+    echo "[INFO] 正在启动应用程序...."
+    until [  -n "$tomcat_running_port" ]
+    do
+        tail_info=`tail -2 ${JAR_HOME}/${RUN_LOG} | awk -F" - " '{print $2}'`
+        tomcat_running_port=`cat ${JAR_HOME}/${RUN_LOG} | grep 'Tomcat started' | awk -F" - " '{print $2}'` 
+        echo "[INFO] ${tail_info}..." 
+        sleep 2s
+    done  
+    
+    echo "[INFO] 成功运行项目${PROJECT_NAME}的jar包:${tomcat_running_port}"
+    echo "All success!"
+else
+   echo "[ERROR] 进程创建失败!"
+fi
+echo "================end====================="
+
+```
 
