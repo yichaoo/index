@@ -1,5 +1,5 @@
-site_name: 技术文档及填坑手册 
-site_description: 技术文档和填坑手册
+site_name: DevOps从入门到躺坑 
+site_description: DevOps从入门到躺坑
 site_author: Liu Yichao
 
 site_url: https://yichaoo.github.io/
@@ -26,7 +26,7 @@ theme:
   #   code: Roboto Mono
   features:
     # - instant
-    - tabs #启用tab
+    - navigation.tabs #启用tab
   include_sidebar: false
 
 # Extensions
@@ -71,7 +71,7 @@ plugins:
         # - zh
         # - en
         # - jp
-  - awesome-pages      
-  - git-revision-date-localized: # 发布日期
-      type: date
-      fallback_to_build_date: true
+  #- awesome-pages      
+  #- git-revision-date-localized: # 发布日期
+  #    type: date
+  #    fallback_to_build_date: true
