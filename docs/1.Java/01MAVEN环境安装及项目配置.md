@@ -2,7 +2,7 @@
 
 ### 配置MAVEN环境
 
-#### 下载、解压maven包
+#### 下载、解压maven包(windows)
 
 windows系统下载二进制压缩包：[Maven最新版下地地址](http://maven.apache.org/download.cgi)、[3.6版下载地址](https://archive.apache.org/dist/maven/maven-3/3.6.0/binaries/)
 
@@ -53,9 +53,12 @@ windows系统下载二进制压缩包：[Maven最新版下地地址](http://mave
 
 ![image-20200723143838689](pics/image-20200723143838689.png)
 
-Linux下通过YUM安装Maven 3.5
+### Linux下通过Yum安装Maven 3.5
 
 ```sh
+#先移除早期版本
+yum remove maven
+
 yum install -y yum-utils
 
 yum-config-manager --add-repo http://repos.fedorapeople.org/repos/dchen/apache-maven/epel-apache-maven.repo
@@ -65,6 +68,28 @@ yum-config-manager --enable epel-apache-maven
 yum install -y apache-maven
 ```
 
+如果产生如下冲突报错信息(如果顺利，可跳过)
+
+![image-20201021162211684](pics/image-20201021162211684.png)
+
+删除冲突的安装来源
+
+```sh
+yum remove plexus-cipher
+yum remove maven-wagon-0:2.4-3.el7.noarch
+```
+
+再次安装成功之后,mvn -v查看版本号和maven路径
+
+![image-20201021163156791](pics/image-20201021163156791.png)
+
+配置maven镜像加速地址,找到maven目录下的配置路径settings.xml
+
+![image-20201021163856521](pics/image-20201021163856521.png)
+
+添加阿里云镜像加速地址(与windows配置一样，本地仓库可以采用默认路径/root/.m2/repository)
+
+![image-20201021164035846](pics/image-20201021164035846.png)
 
 #### Maven查看配置变量命令：mvn help:system
 
@@ -72,13 +97,13 @@ yum install -y apache-maven
 	mvn help:system
 ```
 
-该命令会打印出所有的Java系统属性和环境变量,并下载相关jar包;
+该命令会打印出所有的Java系统属性和环境变量,并下载相关jar包(注意下载过程中路径为阿里镜像地址，证明加速成功)
 
 ![image-20200723131905776](pics/image-20200723131905776.png)
 
 
 
-### IDEA全局配置
+### IDEA全局配置MAVEN
 
 #### 配置 Maven主目录 
 
