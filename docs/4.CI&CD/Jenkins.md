@@ -61,6 +61,69 @@ firewall-cmd --zone=public --add-service=http --permanent
 firewall-cmd --reload
 ```
 
+##### Initialize Jenkins
+
+初始化jenkins
+
+![image-20201021123252534](pics/image-20201021123252534.png)
+
+找到初始化密码
+
+![image-20201021123402937](pics/image-20201021123402937.png)
+
+安装推荐的插件
+
+![image-20201021123527923](pics/image-20201021123527923.png)
+
+创建管理用户
+
+![image-20201021125316159](pics/image-20201021125316159.png)
+
+配置Jenkins Url(如果需要发送webhook,必须配置外网映射地址)
+
+![image-20201021125653268](pics/image-20201021125653268.png)
+
+##### Installing Blue Ocean
+
+Blue Ocean can be installed using the following methods:
+
+- As a suite of plugins on an [existing Jenkins instance](https://www.jenkins.io/doc/book/blueocean/getting-started/#on-an-existing-jenkins-instance), or
+- As part of [Jenkins in Docker](https://www.jenkins.io/doc/book/blueocean/getting-started/#as-part-of-jenkins-in-docker).
+
+###### On an existing Jenkins instance
+
+When Jenkins is installed on most platforms, the [Blue Ocean plugin](https://plugins.jenkins.io/blueocean) and all its other dependent plugins (which form the Blue Ocean "suite of plugins") are not installed by default.
+
+To install the Blue Ocean suite of plugins on an existing Jenkins instance, your Jenkins instance must be running Jenkins 2.7.x or later.
+
+Plugins can be installed on a Jenkins instance by any Jenkins user who has the **Administer**permission (set through **Matrix-based security**). Jenkins users with this permission can also configure the permissions of other users on their system. Read more about this in the [Authorization](https://www.jenkins.io/doc/book/managing/security/#authorization)section of [Managing Security](https://www.jenkins.io/doc/book/managing/security).
+
+To install the Blue Ocean suite of plugins to your Jenkins instance:
+
+1. If required, ensure you are logged in to Jenkins (as a user with the **Administer** permission).
+
+2. From the Jenkins home page (i.e. the Dashboard of the Jenkins classic UI), click **Manage Jenkins** on the left and then **Manage Plugins** in the center.
+
+3. Click the **Available** tab and type `blue ocean` into the **Filter** text box, which filters the list of plugins to those whose name and/or description contains the words "blue" and "ocean".
+
+   ![Blue Ocean plugins filtered](https://www.jenkins.io/doc/book/resources/blueocean/intro/blueocean-plugins-filtered.png)
+
+4. Select the **Blue Ocean** plugin’s check box near the top of the the **Install** column and then click either the **Download now and install after restart** button (recommended) or the **Install without restart** button at the the end of the page.
+   **Notes:**
+
+   - There is no need to select the check boxes of the other plugins in this filtered list because the main **Blue Ocean** plugin has other plugin dependencies (constituting the Blue Ocean suite of plugins) which will automatically be selected and installed when you click one of these "Install" buttons.
+   - If you chose the **Install without restart** button, you may need to restart Jenkins in order to gain full Blue Ocean functionality.
+
+Read more about how to install and manage plugins in the [Managing Plugins](https://www.jenkins.io/doc/book/managing/plugins) page.
+
+Blue Ocean requires no additional configuration after installation, and existing Pipelines projects and other items such as freestyle projects will continue to work as usual.
+
+![image-20201021130806210](pics/image-20201021130806210.png)
+
+![image-20201021130839168](pics/image-20201021130839168.png)
+
+Be aware, however, that the first time a [Pipeline is created in Blue Ocean](https://www.jenkins.io/doc/book/blueocean/creating-pipelines) for a specific Git server (i.e. GitHub, Bitbucket or an ordinary Git server), Blue Ocean prompts you for credentials to access your repositories on the Git server in order to create Pipelines based on those repositories. This is required since Blue Ocean can write `Jenkinsfile`s to your repositories.
+
 #### Downloading and running Jenkins in Docker
 
 1. Open up a terminal window.
