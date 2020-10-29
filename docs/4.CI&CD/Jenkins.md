@@ -4,11 +4,15 @@
 
 [文档中心](https://www.jenkins.io/doc/)
 
+[Jenkins中文文档](https://www.w3cschool.cn/jenkins/)
+
 [入门指南](https://www.jenkins.io/doc/tutorials/)
 
 [安装Jenkins](https://www.jenkins.io/doc/book/installing/)
 
-###### [Build a Java app with Maven](https://www.jenkins.io/doc/tutorials/build-a-java-app-with-maven/) 
+[Build a Java app with Maven](https://www.jenkins.io/doc/tutorials/build-a-java-app-with-maven/) 
+
+### 安装部署
 
 #### Red Hat / CentOS
 
@@ -17,7 +21,7 @@ sudo wget -O /etc/yum.repos.d/jenkins.repo \
     https://pkg.jenkins.io/redhat-stable/jenkins.repo
 sudo rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
 sudo yum upgrade
-sudo yum install jenkins java-1.8.0-openjdk-devel
+sudo yum install jenkins (java-1.8.0-openjdk-devel) --如果已安装java1.8可以不安装此项)
 sudo systemctl daemon-reload
 ```
 
@@ -83,6 +87,53 @@ firewall-cmd --reload
 
 ![image-20201021125653268](pics/image-20201021125653268.png)
 
+##### 启动、停止、重启jenkins
+
+启动
+
+```shell
+service jenkins start
+```
+
+重启
+
+```shell
+service jenkins restart
+```
+
+停止
+
+```shell
+service jenkins stop
+```
+
+此外，还有直接使用url的方式，不过当然不包括启动（此时服务还未启动）,只需要在访问jenkins服务器的网址url地址就可以了
+此处假定 jenkins部署在本机，端口为 8080
+
+浏览器进入Jenkins，登录
+
+```http
+http://localhost:8080/
+```
+
+关闭Jenkins
+
+```http
+http://localhost:8080/exit 
+```
+
+重启Jenkies
+
+```http
+http://localhost:8080/restart 
+```
+
+重新加载配置信息
+
+```http
+http://localhost:8080/reload 
+```
+
 ##### Installing Blue Ocean
 
 Blue Ocean can be installed using the following methods:
@@ -123,6 +174,10 @@ Blue Ocean requires no additional configuration after installation, and existing
 ![image-20201021130839168](pics/image-20201021130839168.png)
 
 Be aware, however, that the first time a [Pipeline is created in Blue Ocean](https://www.jenkins.io/doc/book/blueocean/creating-pipelines) for a specific Git server (i.e. GitHub, Bitbucket or an ordinary Git server), Blue Ocean prompts you for credentials to access your repositories on the Git server in order to create Pipelines based on those repositories. This is required since Blue Ocean can write `Jenkinsfile`s to your repositories.
+
+
+
+
 
 #### Downloading and running Jenkins in Docker
 
@@ -176,7 +231,55 @@ When you first access a new Jenkins instance, you are asked to unlock it using a
 
 4. On the **Unlock Jenkins** page, paste this password into the **Administrator password** field and click **Continue**.
 
-### 思维导图
+#### 踩坑：jenkins配置脚本运行时报错“sudo:没有终端存在，且未指定askpass程序”
+
+具体描述与分析（如图）：
+
+报错：
+
+![img](pics/2019091810273321.png)
+
+分析：使用命令查看根目录
+
+```bash
+cd /var/lib/jenkins/workspace/
+ls -al
+```
+
+可以看到，在jenkins的工作目录下项目文件夹的所有者是jenkins， 我们在安装jenkins的时候，系统自动帮我们创建了jenkins这个用户（这里貌似只有ubuntu是这样，centOS貌似没有这个问题），所以在执行sudo命令的时候是以jenkins的身份运行的，这就要求输入管理员密码从而造成了标题上所说的错误。
+
+![img](pics/20190918103257501.png)
+
+ 
+
+**原因：Jenkins脚本执行到sudo XXXXXX 命令的时候按正常流程来说是需要输入超级管理员密码的，但是在脚本里面没有密码，所以报了这个错误。** 
+
+解决办法：为Jenkins账户添加权限，使其能免密执行命令脚本。大家也可以参考这篇文章 https://blog.csdn.net/Yejianyun1/article/details/54581053
+
+具体命令
+
+```bash
+sudo visudo
+```
+
+找到文件中的
+
+```bash
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+```
+
+在下面加上一行 jenkins     ALL=(ALL)    NOPASSWD: ALL 即可。
+
+```bash
+## Allow root to run any commands anywhere
+root    ALL=(ALL)       ALL
+jenkins        ALL=(ALL)       NOPASSWD: AL
+```
+
+最后重新启动jenkins,即可生效
+
+#### 附录：思维导图
 
 [参考引用](https://www.jianshu.com/p/5f671aca2b5a)
 
