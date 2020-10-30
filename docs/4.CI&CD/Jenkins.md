@@ -274,7 +274,7 @@ root    ALL=(ALL)       ALL
 ```bash
 ## Allow root to run any commands anywhere
 root    ALL=(ALL)       ALL
-jenkins        ALL=(ALL)       NOPASSWD: AL
+jenkins        ALL=(ALL)       NOPASSWD: ALL
 ```
 
 最后重新启动jenkins,即可生效
