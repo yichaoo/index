@@ -213,20 +213,48 @@ mysql> grant select, insert, delete, update,alter on db_example.* to 'springuser
 ```sql
 mysql> grant all on db_example.* to 'springuser'@'%';
 ```
+作用域：
+```sql
 
+*.*                 ---->代表所有数据库的权限
+db_example.*            ----> db_example 数据库下所有表
+db_example.t1           ----> db_example 数据库下 t1 表
+```
 给root所有的权限 
-
 ```sql
 mysql> grant all privileges on *.* to root@"%" identified by ".";
 Query OK, 0 rows affected (0.00 sec)
 ```
 
+常用权限介绍：
+```sql
+select：可以从数据库中的表中查询数据
+insert：可以插入数据到数据库的表中
+update：可以对数据库中的表进行更新数据
+delete：可以从数据库中的表中删除数据
+alter：可以使用 alter table 来改变表的结构
+create：可以创建新的数据库或表的语句
+drop：能够删除现有数据库，表和视图
+grant option：可以向其它用户授予或移除权限
+index：可以创建和删除索引
+all或all privileges：代表指定权限等级的所有权限
+```
+
+查看权限
+```sql
+mysql> show grants for app@'10.0.0.%';
+```
+回收权限
+```sql
+mysql> revoke delete on wordpress.*  from app@'10.0.0.%';
+```
 备注：mysql5.7 客户端用IP访问，需要单独再给root设置一个与本地localhost不一样的登陆密码
 
 ```
 mysql> GRANT ALL ON *.* TO root@'%' IDENTIFIED BY '123456'
 mysql> flush privileges;
 ```
+
 
 ![image-20200909183424636](pics/image-20200909183424636.png)
 
@@ -351,7 +379,7 @@ do
     echo "[INFO] 正在结束项目${PROJECT_NAME}的jar包进程ID:${pid}....."
     if [ ${pid} ] 
     then
-        kill -2 ${pid}
+        kill -9 ${pid}
     fi
     funGetJarPID
 done
